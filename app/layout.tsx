@@ -19,10 +19,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  searchParams,   //  <<< ⚠ OBLIGATOIRE POUR TRANSMETTRE AUX PAGES
+ 
 }: {
   children: React.ReactNode;
-  searchParams: { [key: string]: string | undefined };
+
 }) {
   return (
     <html lang="en">
