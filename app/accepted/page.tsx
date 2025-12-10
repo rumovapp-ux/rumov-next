@@ -11,6 +11,10 @@ export default function AcceptedPage({ searchParams }: { searchParams: any }) {
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
+  console.log("URLSUPABASE DETECTEE PAR NEXT :", process.env.NEXT_PUBLIC_SUPABASE_URL);
+  console.log("matchId :", matchId);
+  console.log("token :", token);
+
   useEffect(() => {
     if (!matchId || !token) {
       setErrorMsg("Lien invalide ou incomplet.");
@@ -20,7 +24,7 @@ export default function AcceptedPage({ searchParams }: { searchParams: any }) {
 
     const load = async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/get-mission-details?match_id=${matchId}&token=${token}`;
+        const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/get-mission?match_id=${matchId}&token=${token}`;
 
         const res = await fetch(url);
         const json = await res.json();
