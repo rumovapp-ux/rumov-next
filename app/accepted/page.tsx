@@ -1,12 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
 
 export default function AcceptedPage({ searchParams }: { searchParams: any }) {
   const matchId = searchParams.match_id;
@@ -14,47 +8,41 @@ export default function AcceptedPage({ searchParams }: { searchParams: any }) {
 
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!matchId || !token) return;
+    if (!matchId || !token) {
+      setErrorMsg("Lien invalide ou incomplet.");
+      setLoading(false);
+      return;
+    }
 
     const load = async () => {
-      // 1️⃣ Vérifier le match + token
-      const { data: match, error: matchError } = await supabase
-        .from("match_results")
-        .select("artisan_id, client_demande_id, secure_token")
-        .eq("id", matchId)
-        .single();
+      try {
+        const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/get-mission-details?match_id=${matchId}&token=${token}`;
 
-      if (matchError || !match || match.secure_token !== token) {
-        setData({ error: "Lien invalide ou expiré." });
+        const res = await fetch(url);
+        const json = await res.json();
+
+        if (!json.success) {
+          setErrorMsg(json.error || "Erreur inconnue");
+          setLoading(false);
+          return;
+        }
+
+        setData(json.demande);
         setLoading(false);
-        return;
-      }
-
-      // 2️⃣ Charger la demande client
-      const { data: demande, error: demandeError } = await supabase
-        .from("demandes_clients")
-        .select("*")
-        .eq("client_id", match.client_demande_id)
-        .single();
-
-      if (demandeError || !demande) {
-        setData({ error: "Demande introuvable." });
+      } catch (e) {
+        setErrorMsg("Impossible de contacter le serveur.");
         setLoading(false);
-        return;
       }
-
-      setData(demande);
-      setLoading(false);
     };
 
     load();
   }, [matchId, token]);
 
   if (loading) return <p style={{ padding: 30 }}>Chargement…</p>;
-  if (data?.error)
-    return <p style={{ padding: 30, color: "red" }}>{data.error}</p>;
+  if (errorMsg) return <p style={{ padding: 30, color: "red" }}>{errorMsg}</p>;
 
   return (
     <div
@@ -90,18 +78,13 @@ export default function AcceptedPage({ searchParams }: { searchParams: any }) {
             borderRadius: 6,
           }}
         >
-          Demande non urgente — Le client peut être contacté par plusieurs
-          artisans.
+          Demande non urgente — Le client peut être contacté par plusieurs artisans.
         </p>
       )}
 
       <h3>Client</h3>
-      <p>
-        <b>Nom :</b> {data.full_name}
-      </p>
-      <p>
-        <b>Téléphone :</b> {data.phone}
-      </p>
+      <p><b>Nom :</b> {data.full_name}</p>
+      <p><b>Téléphone :</b> {data.phone}</p>
 
       <h3>Adresse</h3>
       <p>
