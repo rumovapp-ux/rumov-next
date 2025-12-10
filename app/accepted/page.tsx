@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+
 export default function AcceptedPage({ searchParams }: { searchParams: any }) {
   const matchId = searchParams.match_id;
   const token = searchParams.token;
@@ -35,8 +36,7 @@ export default function AcceptedPage({ searchParams }: { searchParams: any }) {
       } catch (e) {
         setErrorMsg("Impossible de contacter le serveur.");
         setLoading(false);
-      }
-    };
+      }};
 
     load();
   }, [matchId, token]);
