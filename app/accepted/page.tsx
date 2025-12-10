@@ -2,10 +2,23 @@
 
 import { useEffect, useState } from "react";
 
-export default function AcceptedPage({ searchParams }: { searchParams: any }) {
-  console.log("PARAMS", searchParams);
-  const matchId = searchParams.match_id;
-  const token = searchParams.token;
+export default function AcceptedPage({ 
+  searchParams,
+}: { 
+  searchParams: Record<string, string | string[] | undefined>; // Meilleur typage
+}) {
+  // Récupération sécurisée et casting en string
+  const matchId = Array.isArray(searchParams.match_id) 
+                  ? searchParams.match_id[0] 
+                  : searchParams.match_id || null;
+  
+  const token = Array.isArray(searchParams.token) 
+                  ? searchParams.token[0] 
+                  : searchParams.token || null;
+
+  // L'exécution continue ici...
+  // ...
+
 
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
