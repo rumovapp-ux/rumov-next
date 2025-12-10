@@ -2,11 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-export default function AcceptedPage({
-  searchParams,
-}: {
-  searchParams: Record<string, string>;
-}) {
+export default function AcceptedPage({ searchParams }: { searchParams: any }) {
+  console.log("PARAMS", searchParams);
   const matchId = searchParams.match_id;
   const token = searchParams.token;
 
