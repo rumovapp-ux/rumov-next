@@ -55,6 +55,15 @@ const contactButtonStyle: CSSProperties = {
     marginTop: '25px',
     transition: 'background 0.25s ease',
   };
+
+const delaiMap: { [key: string]: string } = {
+  'moins_de_48h': 'Moins de 48 heures (URGENT)',
+  'moins_de_deux_semaines': 'Dans les deux semaines (Standard)',
+  'devis_seul': 'Devis seul (Flexible)'
+  
+};
+
+// ... (votre useEffect commence ici)
   // Fin de la déclaration des styles
 
   useEffect(() => {
@@ -119,8 +128,7 @@ const contactButtonStyle: CSSProperties = {
       {/* 1. DESCRIPTION ET DÉLAIS */}
       <h3 style={sectionTitleStyle}>🔎 Description de la Mission</h3>
       <p style={detailTextStyle}>
-          <b>Délais souhaité :</b> {data?.delai_souhaite}
-      </p>
+          <b>Délais souhaité :</b>  {delaiMap[data?.delai_souhaite] || data?.delai_souhaite}</p>
       <p style={detailTextStyle}>
           <b>Description :</b> {data?.description}
       </p>
