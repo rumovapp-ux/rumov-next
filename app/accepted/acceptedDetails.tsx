@@ -57,7 +57,8 @@ const descriptionBlockStyle: CSSProperties = {
     lineHeight: '1.6',
     fontSize: '1rem',
     color: '#555',
-    textAlign: 'left' // ✅ Doit être à gauche pour la lisibilité
+    textAlign: 'left', // ✅ Doit être à gauche pour la lisibilité
+    wordBreak: 'break-word',
 };
 
 const contactButtonStyle: CSSProperties = {
