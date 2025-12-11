@@ -43,10 +43,13 @@ textAlign: 'center'
 };
 
 const detailTextStyle: CSSProperties = {
-fontSize: '15px',
+fontSize: '1rem',
 color: '#555',
 lineHeight: '1.6',
-marginBottom: '8px'
+marginBottom: '10px',
+display: "flex",
+justifyContent: "center",
+gap: "5px"
 };
 
 const contactButtonStyle: CSSProperties = {
@@ -68,7 +71,7 @@ const contactButtonStyle: CSSProperties = {
 
 const delaiMap: { [key: string]: string } = {
   'moins_de_48h': 'Moins de 48 heures (URGENT)',
-  'moins_de_deux_semaines': 'Dans les deux semaines (Standard)',
+  'moins_de_2_semaines': 'Dans les deux semaines (Standard)',
   'devis_seul': 'Devis seul (Flexible)'
   
 };
@@ -137,11 +140,18 @@ const delaiMap: { [key: string]: string } = {
 
       {/* 1. DESCRIPTION ET DÉLAIS */}
       <h3 style={sectionTitleStyle}>🔎 Description de la Mission</h3>
+
       <p style={detailTextStyle}>
-          <b>Délais souhaité :</b>  {delaiMap[data?.delai_souhaite] || data?.delai_souhaite}</p>
-      <p style={detailTextStyle}>
-          <b>Description :</b> {data?.description}
-      </p>
+    <b style={{ minWidth: '100px', display: 'inline-block' }}>Délai souhaité :</b> 
+    {delaiMap[data?.delai_souhaite] || data?.delai_souhaite}
+</p>
+      <div style={{ marginBottom: '20px' }}>
+    <p style={{ ...detailTextStyle, fontWeight: '600', marginBottom: '5px', display: 'block' }}>Description :</p>
+    <p style={{ ...detailTextStyle, fontSize: '15px', color: '#555', lineHeight: '1.6', display: 'block' }}>
+        {data?.description}
+    </p>
+</div>
+          
       
       {/* 2. PHOTO JOINTE */}
       {data?.photo_url && (
@@ -163,14 +173,16 @@ const delaiMap: { [key: string]: string } = {
       {/* 3. LOCALISATION */}
       <h3 style={sectionTitleStyle}>📍 Localisation</h3>
       <p style={detailTextStyle}>
-          <b>Adresse :</b> {data?.address_line}, {data?.client_cp}, {data?.ville}
-      </p>
+    <b style={{ minWidth: '100px', display: 'inline-block' }}>Adresse :</b> 
+    {data?.address_line} {data?.client_cp} {data?.ville}
+</p>
       
       {/* 4. CLIENT & CONTACT */}
       <h3 style={sectionTitleStyle}>👤 Client & Contact</h3>
       <p style={detailTextStyle}>
-          <b>Nom :</b> {data?.full_name}
-      </p>
+    <b style={{ minWidth: '100px', display: 'inline-block' }}>Nom :</b> 
+    {data?.full_name}
+</p>
       <a
 href={`tel:${data?.phone}`}
 style={contactButtonStyle}
