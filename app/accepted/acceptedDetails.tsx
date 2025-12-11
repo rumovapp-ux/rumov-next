@@ -21,23 +21,33 @@ export default function AcceptedDetails() {
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // 🔑 1. DÉCLARATION DES STYLES (DOIT ÊTRE DANS LA FONCTION, HORS DU RETURN)
-  const sectionTitleStyle: CSSProperties = {
-    fontSize: '18px',
-    fontWeight: '600',
-    color: '#333',
-    marginTop: '25px',
-    marginBottom: '10px',
-    borderBottom: '2px solid #f5f5f5',
-    paddingBottom: '5px'
-  };
 
-  const detailTextStyle: CSSProperties = {
-    fontSize: '15px',
-    color: '#555',
-    lineHeight: '1.6',
-    marginBottom: '8px'
-  };
+const primaryColor = '#00c0c7';
+  const textDark = '#111';
+  const spaceLg = '32px';
+  const spaceMd = '24px';
+
+// 🔑 1. DÉCLARATION DES STYLES (DOIT ÊTRE DANS LA FONCTION, HORS DU RETURN)
+const sectionTitleStyle: CSSProperties = {
+fontSize: '1.2rem',
+fontWeight: '600',
+color: textDark,
+marginTop: spaceMd,
+marginBottom: '10px',
+borderBottom: `1px solid ${primaryColor}`,
+paddingBottom: '5px',
+fontFamily: 'Montserrat, sans-serif',
+    
+    // ✅ AJOUT : Centrer les titres de section pour l'équilibre
+textAlign: 'center'
+};
+
+const detailTextStyle: CSSProperties = {
+fontSize: '15px',
+color: '#555',
+lineHeight: '1.6',
+marginBottom: '8px'
+};
 
 const contactButtonStyle: CSSProperties = {
     display: 'block',
