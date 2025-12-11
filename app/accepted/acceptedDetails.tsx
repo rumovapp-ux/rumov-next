@@ -41,15 +41,23 @@ fontFamily: 'Montserrat, sans-serif',
     // ✅ AJOUT : Centrer les titres de section pour l'équilibre
 textAlign: 'center'
 };
+const detailRowStyle: CSSProperties = {
+    // Style pour les lignes Nom/Adresse/Délai
+    display: 'flex', // Utiliser Flexbox pour aligner le label et la valeur
+    justifyContent: 'flex-start', // Démarrer la ligne à gauche du conteneur
+    marginBottom: '8px',
+    lineHeight: '1.6',
+    fontSize: '1rem',
+    color: '#555',
+};
 
-const detailTextStyle: CSSProperties = {
-fontSize: '1rem',
-color: '#555',
-lineHeight: '1.6',
-marginBottom: '10px',
-display: "flex",
-justifyContent: "center",
-gap: "5px"
+const descriptionBlockStyle: CSSProperties = {
+    // Style pour le bloc Description (qui s'étale)
+    marginBottom: '20px',
+    lineHeight: '1.6',
+    fontSize: '1rem',
+    color: '#555',
+    textAlign: 'left' // ✅ Doit être à gauche pour la lisibilité
 };
 
 const contactButtonStyle: CSSProperties = {
@@ -141,17 +149,18 @@ const delaiMap: { [key: string]: string } = {
       {/* 1. DESCRIPTION ET DÉLAIS */}
       <h3 style={sectionTitleStyle}>🔎 Description de la Mission</h3>
 
-      <p style={detailTextStyle}>
-    <b style={{ minWidth: '100px', display: 'inline-block' }}>Délai souhaité :</b> 
+      <p style={detailRowStyle}>
+    <b style={{ marginRight: '5px' }}>
+        Délai souhaité :</b> 
     {delaiMap[data?.delai_souhaite] || data?.delai_souhaite}
 </p>
-      <div style={{ marginBottom: '20px' }}>
-    <p style={{ ...detailTextStyle, fontWeight: '600', marginBottom: '5px', display: 'block' }}>Description :</p>
-    <p style={{ ...detailTextStyle, fontSize: '15px', color: '#555', lineHeight: '1.6', display: 'block' }}>
-        {data?.description}
-    </p>
-</div>
-          
+      
+          <p style={{ ...descriptionBlockStyle, fontWeight: '600', marginBottom: '5px' }}>
+          Description :
+      </p>
+      <p style={descriptionBlockStyle}>
+          {data?.description}
+      </p>
       
       {/* 2. PHOTO JOINTE */}
       {data?.photo_url && (
@@ -172,15 +181,15 @@ const delaiMap: { [key: string]: string } = {
 
       {/* 3. LOCALISATION */}
       <h3 style={sectionTitleStyle}>📍 Localisation</h3>
-      <p style={detailTextStyle}>
-    <b style={{ minWidth: '100px', display: 'inline-block' }}>Adresse :</b> 
+      <p style={detailRowStyle}>
+    <b style={{ marginRight: '5px'}}>Adresse :</b> 
     {data?.address_line} {data?.client_cp} {data?.ville}
 </p>
       
       {/* 4. CLIENT & CONTACT */}
       <h3 style={sectionTitleStyle}>👤 Client & Contact</h3>
-      <p style={detailTextStyle}>
-    <b style={{ minWidth: '100px', display: 'inline-block' }}>Nom :</b> 
+      <p style={detailRowStyle}>
+    <b style={{ marginRight: '5px'}}>Nom :</b> 
     {data?.full_name}
 </p>
       <a
