@@ -128,7 +128,7 @@ const contactButtonStyle: CSSProperties = {
       {/* 2. PHOTO JOINTE */}
       {data?.photo_url && (
         <>
-          <h3 style={{ marginTop: '20px' }}>🖼️ Photo jointe</h3>
+          <h3 style={sectionTitleStyle}>🖼️ Photo jointe</h3>
           <img 
             src={data.photo_url} 
             alt="Photo fournie par le client pour la mission" 
